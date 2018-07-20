@@ -50,6 +50,7 @@
     "buffer-shims": "^1.0.0",
     "gulp-babel": "^7.0.1",
     "gulp-plumber": "^1.2.0",
+    "gulp-sourcemaps": "^2.6.4",
     "gulp-util": "^3.0.8",
     "jest": "23.1.0",
     "jest-react-native": "18.0.0",
