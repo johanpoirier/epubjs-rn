@@ -28,10 +28,6 @@ if (!global.btoa) {
 
 import ePub, { Layout, EpubCFI } from "epubjs";
 
-const core = require("epubjs/lib/utils/core");
-const Uri = require("epubjs/lib/utils/url");
-const Path = require("epubjs/lib/utils/path");
-
 const Rendition = require("./Rendition");
 
 class Epub extends Component {
@@ -346,35 +342,5 @@ class Epub extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-  },
-  manager: {
-    flex: 1,
-  },
-  scrollContainer: {
-    flex: 1,
-    marginTop: 0,
-    flexDirection: "row",
-    flexWrap: "nowrap",
-    backgroundColor: "#F8F8F8",
-  },
-  rowContainer: {
-    flex: 1,
-  },
-  loadScreen: {
-    position: "absolute",
-    top: 0,
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    alignItems: "center"
-  }
-});
 
 module.exports = Epub;
