@@ -14,7 +14,7 @@ import {
 
 import WKWebView from 'react-native-wkwebview-reborn';
 
-import EventEmitter from 'event-emitter'
+import EventEmitter from 'event-emitter';
 
 import { readFileSync } from "fs";
 
