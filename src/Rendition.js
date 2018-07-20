@@ -298,7 +298,7 @@ class Rendition extends Component {
       }
       case "resized": {
         let {size} = decoded;
-        // console.log("resized", size.width, size.height);
+        console.log("resized", size.width, size.height);
         break;
       }
       case "press": {
