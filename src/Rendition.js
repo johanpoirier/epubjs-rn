@@ -283,6 +283,7 @@ class Rendition extends Component {
         break;
       }
       case "rendered": {
+        console.log("rendered");
         if (!this.state.loaded) {
           this.setState({loaded: true});
         }
@@ -330,6 +331,7 @@ class Rendition extends Component {
         break;
       }
       case "ready": {
+        console.log("ready");
         this._ready();
         break;
       }

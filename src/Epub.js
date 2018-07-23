@@ -12,7 +12,7 @@ import {
 
 import Orientation from "react-native-orientation";
 
-import RNFetchBlob from "react-native-fetch-blob"
+import RNFetchBlob from "rn-fetch-blob"
 
 if (!global.Blob) {
   global.Blob = RNFetchBlob.polyfill.Blob;
@@ -194,39 +194,16 @@ class Epub extends Component {
     });
 
     return this._openBook(bookUrl);
-
-    /*
-    var type = this.book.determineType(bookUrl);
-
-    var uri = new Uri(bookUrl);
-    if ((type === "directory") || (type === "opf")) {
-      return this._openBook(bookUrl);
-    } else {
-      return this.streamer.start()
-      .then((localOrigin) => {
-        this.setState({localOrigin})
-        return this.streamer.get(bookUrl);
-      })
-      .then((localUrl) => {
-        this.setState({localUrl})
-        return this._openBook(localUrl);
-      });
-    }
-    */
   }
 
   _openBook(bookUrl, useBase64) {
-    var type = useBase64 ? "base64" : null;
-
     if (!this.rendition) {
       this.needsOpen = [bookUrl, useBase64];
       return;
     }
 
     this.book.open(bookUrl)
-      .catch((err) => {
-        console.error(err);
-      })
+      .catch(console.error);
 
     this.book.ready.then(() => {
       this.isReady = true;
