@@ -104,6 +104,7 @@ window.onerror = function (message, file, line, col, error) {
           }
 
           if (rendition) {
+            sendMessage({method:"log", value: "rendition display target:" + target});
             rendition.display(target);
           } else {
             q.push(message);
