@@ -72,7 +72,7 @@ window.onerror = function (message, file, line, col, error) {
       var response;
       var result;
 
-      sendMessage({method:"log", value: "[Rendition] handleMessage: " + decoded});
+      sendMessage({method:"log", value: "[Rendition] handleMessage: " + message});
 
       switch (decoded.method) {
         case "open": {
