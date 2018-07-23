@@ -72,6 +72,8 @@ window.onerror = function (message, file, line, col, error) {
       var response;
       var result;
 
+      sendMessage({method:"log", value: "[Rendition] handleMessage", decoded});
+
       switch (decoded.method) {
         case "open": {
           var url = decoded.args[0];
@@ -93,7 +95,7 @@ window.onerror = function (message, file, line, col, error) {
           var args = decoded.args && decoded.args.length && decoded.args[0];
           var target;
 
-          sendMessage({method:"log", value: "rendition.display"});
+          sendMessage({method:"log", value: "[Rendition] display"});
           sendMessage({method:"log", value: args});
 
           if (!args) {
@@ -106,6 +108,7 @@ window.onerror = function (message, file, line, col, error) {
             target = parseInt(args.spine);
           }
 
+          sendMessage({method:"log", value: "[Rendition] target: " + target});
           if (rendition) {
             rendition.display(target);
           } else {
