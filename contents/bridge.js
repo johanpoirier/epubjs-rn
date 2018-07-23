@@ -93,6 +93,9 @@ window.onerror = function (message, file, line, col, error) {
           var args = decoded.args && decoded.args.length && decoded.args[0];
           var target;
 
+          sendMessage({method:"log", value: "rendition.display"});
+          sendMessage({method:"log", value: args});
+
           if (!args) {
             target = undefined;
           }
@@ -104,7 +107,6 @@ window.onerror = function (message, file, line, col, error) {
           }
 
           if (rendition) {
-            sendMessage({method:"log", value: "rendition display target:" + target});
             rendition.display(target);
           } else {
             q.push(message);
@@ -114,6 +116,9 @@ window.onerror = function (message, file, line, col, error) {
         case "flow": {
           var direction = decoded.args.length && decoded.args[0];
           axis = (direction === "paginated") ? "horizontal" : "vertical";
+
+            sendMessage({method:"log", value: "rendition.flow"});
+            sendMessage({method:"log", value: direction});
 
           if (rendition) {
             rendition.flow(direction);
@@ -477,10 +482,6 @@ window.onerror = function (message, file, line, col, error) {
 
       rendition.on("resized", function(size){
         sendMessage({method:"resized", size: size});
-      });
-
-      rendition.on("debug", function(message){
-          sendMessage({method:"debug", message: message});
       });
 
       // replay messages
