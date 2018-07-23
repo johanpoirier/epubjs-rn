@@ -10,7 +10,11 @@ window.onerror = function (message, file, line, col, error) {
     var contents;
     var targetOrigin = "*";
     var sendMessage = function(obj) {
-      window.postMessage(JSON.stringify(obj), targetOrigin);
+      try {
+          window.postMessage(JSON.stringify(obj), targetOrigin);
+      } catch (error) {
+          window.postMessage(error.message, targetOrigin);
+      }
     };
 
     var preventTap = false;
