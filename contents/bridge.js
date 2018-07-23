@@ -246,13 +246,10 @@ window.onerror = function (message, file, line, col, error) {
 
       window.book = book = ePub(url);
 
-      sendMessage({method:"log", value: '[Bridge] book.renderTo'});
-      sendMessage({method:"log", value: settings});
-
       window.rendition = rendition = book.renderTo(document.body, settings);
+      sendMessage({method:"log", value: '[Bridge] book.renderTo'});
       sendMessage({method:"log", value: rendition.settings});
       sendMessage({method:"log", value: rendition.locations});
-      sendMessage({method:"log", value: rendition.hooks});
 
       rendition.hooks.content.register(function(contents) {
         sendMessage({method:"log", value: '[Bridge] hooks.content.register'});
