@@ -180,14 +180,14 @@ class Epub extends Component {
     }
 
 
-    __DEV__ && console.log("orientation", _orientation);
+    __DEV__ && console.log("[Epub] orientation", _orientation);
 
     this.setState({ orientation: _orientation });
     this.props.onOrientationChanged && this.props.onOrientationChanged(_orientation);
   }
 
   _loadBook(bookUrl) {
-    __DEV__ && console.log("loading book: ", bookUrl);
+    __DEV__ && console.log("[Epub] loading book: ", bookUrl);
 
     this.book = ePub({
       replacements: this.props.base64 || "none"

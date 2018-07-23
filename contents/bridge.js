@@ -36,11 +36,11 @@ window.onerror = function (message, file, line, col, error) {
     // debug
     console.log = function() {
       sendMessage({method:"log", value: Array.from(arguments)});
-    }
+    };
 
     console.error = function() {
       sendMessage({method:"error", value: Array.from(arguments)});
-    }
+    };
 
     // var isReactNativePostMessageReady = !!window.originalPostMessage;
     var isReactNativePostMessageReady = !!window.originalPostMessage || window.postMessage.toString().indexOf("[native code]") === -1;
@@ -64,7 +64,7 @@ window.onerror = function (message, file, line, col, error) {
     }
 
     function handleMessage(message) {
-      var decoded = (typeof message == "object") ? message : JSON.parse(message);
+      var decoded = (typeof message === "object") ? message : JSON.parse(message);
       var response;
       var result;
 

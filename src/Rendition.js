@@ -104,7 +104,7 @@ class Rendition extends Component {
   load(bookUrl) {
     if (!this._webviewLoaded) return;
 
-    __DEV__ && console.log("loading book: ", bookUrl);
+    __DEV__ && console.log("[Rendition] loading book: ", bookUrl);
 
     let config = {
       "minSpreadWidth": this.props.minSpreadWidth || 800,
@@ -249,7 +249,7 @@ class Rendition extends Component {
 
   _onWebViewLoaded() {
     this._webviewLoaded = true;
-    console.log("has loadeds");
+    console.log('[Rendition] Web view has loaded');
     if (this.props.url) {
       this.load(this.props.url);
     }
@@ -283,7 +283,7 @@ class Rendition extends Component {
         break;
       }
       case "rendered": {
-        console.log("rendered");
+        console.log("[Rendition] rendered");
         if (!this.state.loaded) {
           this.setState({loaded: true});
         }
@@ -331,12 +331,12 @@ class Rendition extends Component {
         break;
       }
       case "ready": {
-        console.log("ready");
+        console.log("[Rendition] ready");
         this._ready();
         break;
       }
       default: {
-        console.log("msg", decoded);
+        console.log("[Rendition] msg", decoded);
       }
     }
   }
