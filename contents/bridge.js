@@ -231,6 +231,8 @@ window.onerror = function (message, file, line, col, error) {
     }
 
     function openEpub(url, options) {
+      sendMessage({method:"log", value: '[Bridge] opening ebook at ' + url});
+
       var settings = Object.assign({
         manager: "continuous",
         overflow: "visible",
@@ -239,7 +241,9 @@ window.onerror = function (message, file, line, col, error) {
 
       window.book = book = ePub(url);
 
+      sendMessage({method:"log", value: '[Bridge] document.body: ' + document.body});
       window.rendition = rendition = book.renderTo(document.body, settings);
+      sendMessage({method:"log", value: '[Bridge] rendition: ' + rendition});
 
       rendition.hooks.content.register(function(contents, rendition) {
         var doc = contents.document;
