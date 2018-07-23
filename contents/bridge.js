@@ -244,8 +244,6 @@ window.onerror = function (message, file, line, col, error) {
       window.book = book = ePub(url);
 
       window.rendition = rendition = book.renderTo(document.body, settings);
-      sendMessage({method:"log", value: '[Bridge] rendition.hooks'});
-      sendMessage({method:"log", value: Object.keys(rendition.hooks)});
 
       rendition.hooks.content.register(function(contents) {
         sendMessage({method:"log", value: '[Bridge] hooks.content.register'});
@@ -478,6 +476,10 @@ window.onerror = function (message, file, line, col, error) {
 
       rendition.on("resized", function(size){
         sendMessage({method:"resized", size: size});
+      });
+
+      rendition.on("debug", function(message){
+          sendMessage({method:"debug", message: message});
       });
 
       // replay messages
