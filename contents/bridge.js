@@ -72,7 +72,7 @@ window.onerror = function (message, file, line, col, error) {
       var response;
       var result;
 
-      sendMessage({method:"log", value: "[Rendition] handleMessage", decoded});
+      sendMessage({method:"log", value: "[Rendition] handleMessage: " + decoded});
 
       switch (decoded.method) {
         case "open": {
@@ -96,7 +96,6 @@ window.onerror = function (message, file, line, col, error) {
           var target;
 
           sendMessage({method:"log", value: "[Rendition] display"});
-          sendMessage({method:"log", value: args});
 
           if (!args) {
             target = undefined;
@@ -108,10 +107,11 @@ window.onerror = function (message, file, line, col, error) {
             target = parseInt(args.spine);
           }
 
-          sendMessage({method:"log", value: "[Rendition] target: " + target});
           if (rendition) {
+            sendMessage({method:"log", value: "[Rendition] display target: " + target});
             rendition.display(target);
           } else {
+            sendMessage({method:"log", value: "[Rendition] queue message: " + message});
             q.push(message);
           }
           break;
