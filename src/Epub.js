@@ -26,7 +26,7 @@ if (!global.btoa) {
   global.btoa = require("base-64").encode;
 }
 
-import ePub, { Layout, EpubCFI } from "epubjs";
+import ePub from "epubjs";
 
 const Rendition = require("./Rendition");
 

@@ -15,7 +15,7 @@ module.exports = {
 		"xmldom": "xmldom"
 	},
 	module: {
-		loaders: [
+		rules: [
 			{
 				test: /\.js$/,
 				//exclude: /node_modules/,
@@ -34,4 +34,4 @@ module.exports = {
 			path: "path-webpack"
 		}
 	}
-}
+};

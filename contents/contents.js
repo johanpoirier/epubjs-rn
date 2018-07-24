@@ -1,3 +1,3 @@
-var Contents = require('epubjs/lib/contents');
+var Contents = require('epubjs/lib/rendition/contents');
 
 module.exports = Contents;

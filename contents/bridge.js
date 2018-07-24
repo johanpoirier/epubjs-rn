@@ -67,7 +67,7 @@ window.onerror = function (message, file, line, col, error) {
       handleMessage(message);
     }
 
-    function handleMessage(message) {
+    async function handleMessage(message) {
       var decoded = (typeof message === "object") ? message : JSON.parse(message);
       var response;
       var result;
@@ -78,7 +78,7 @@ window.onerror = function (message, file, line, col, error) {
         case "open": {
           var url = decoded.args[0];
           var options = decoded.args.length > 1 && decoded.args[1];
-          openEpub(url, options);
+          await openEpub(url, options);
 
           if (options && options.webviewStylesheet) {
             var head = document.getElementsByTagName('head')[0];
@@ -243,14 +243,14 @@ window.onerror = function (message, file, line, col, error) {
       }
     }
 
-    function openEpub(url, options) {
+    async function openEpub(url, options) {
       var settings = Object.assign({
         manager: "continuous",
         overflow: "visible",
         method: "blobUrl"
       }, options);
 
-      window.book = book = ePub(url);
+      await window.book = book = ePub(url);
 
       window.rendition = rendition = book.renderTo(document.body, settings);
 
