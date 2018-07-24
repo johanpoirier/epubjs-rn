@@ -189,10 +189,6 @@ class Epub extends Component {
   _loadBook(bookUrl) {
     __DEV__ && console.log("[Epub] loading book: ", bookUrl);
 
-    this.book = ePub({
-      replacements: this.props.base64 || "none"
-    });
-
     return this._openBook(bookUrl);
   }
 
@@ -202,8 +198,7 @@ class Epub extends Component {
       return;
     }
 
-    this.book.open(bookUrl)
-      .catch(console.error);
+    this.book = ePub(bookUrl);
 
     this.book.ready.then(() => {
       this.isReady = true;
