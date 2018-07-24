@@ -198,27 +198,28 @@ class Epub extends Component {
       return;
     }
 
-    this.book = ePub(bookUrl);
+    return ePub(bookUrl).then(book => {
+        this.book = book;
 
-    this.book.ready.then(() => {
-      this.isReady = true;
-      this.props.onReady && this.props.onReady(this.book);
+        this.book.ready.then(() => {
+            this.isReady = true;
+            this.props.onReady && this.props.onReady(this.book);
+        });
+
+        this.book.loaded.navigation.then((nav) => {
+            if (!this.active || !this._isMounted) return;
+            this.setState({toc: nav.toc});
+            this.props.onNavigationReady && this.props.onNavigationReady(nav.toc);
+        });
+
+        if (this.props.generateLocations !== false) {
+            this.loadLocations().then((locations) => {
+                this.rendition.setLocations(locations);
+                // this.rendition.reportLocation();
+                this.props.onLocationsReady && this.props.onLocationsReady(this.book.locations);
+            });
+        }
     });
-
-    this.book.loaded.navigation.then((nav) => {
-      if(!this.active || !this._isMounted) return;
-      this.setState({toc : nav.toc});
-      this.props.onNavigationReady && this.props.onNavigationReady(nav.toc);
-    });
-
-    if (this.props.generateLocations != false) {
-      this.loadLocations().then((locations) => {
-        this.rendition.setLocations(locations);
-        // this.rendition.reportLocation();
-        this.props.onLocationsReady && this.props.onLocationsReady(this.book.locations);
-      });
-    }
-
   }
 
   loadLocations() {
