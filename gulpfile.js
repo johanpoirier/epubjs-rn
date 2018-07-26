@@ -1,7 +1,6 @@
 var gulp = require("gulp");
 var gutil = require('gulp-util');
 var babel = require("gulp-babel");
-var sourcemaps = require('gulp-sourcemaps');
 var plumber = require('gulp-plumber');
 var onError = function (err) {
 	gutil.log(err);
@@ -10,7 +9,6 @@ var onError = function (err) {
 gulp.task("build", function () {
 	return gulp.src(["./src/**/*.js"])
 	.pipe(plumber({ errorHandler: onError }))
-    .pipe(sourcemaps.init())
 	.pipe(babel({
 		"plugins": [
 			"syntax-jsx",
@@ -23,7 +21,6 @@ gulp.task("build", function () {
 			"static-fs"
 		]
 	}))
-	.pipe(sourcemaps.write('.'))
 	.pipe(gulp.dest("components"));
 });
 
