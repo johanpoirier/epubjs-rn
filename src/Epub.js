@@ -199,14 +199,17 @@ class Epub extends Component {
         }
 
         ePub(bookUrl)
-            .then(book => this.book = book)
+            .then(book => {
+                this.book = book;
+                this.ePub = window.Epub;
+            })
             .then(() => {
-                window.Epub.ready.then(() => {
+                this.ePub.ready.then(() => {
                     this.isReady = true;
                     this.props.onReady && this.props.onReady(this.book);
                 });
 
-                window.Epub.opened.then(book => {
+                this.ePub.opened.then(book => {
                     if (!this.active || !this._isMounted) return;
                     this.setState({toc: book.navigation.toc});
                     this.props.onNavigationReady && this.props.onNavigationReady(book.navigation.toc);
@@ -223,11 +226,11 @@ class Epub extends Component {
     }
 
     loadLocations() {
-        return this.book.ready.then(() => {
+        return this.ePub.ready.then(() => {
             // Load in stored locations from json or local storage
             var key = this.book.key() + "-locations";
 
-            return AsyncStorage.getItem(key).then((stored) => {
+            return AsyncStorage.getItem(key).then(stored => {
                 if (this.props.regenerateLocations != true && stored !== null) {
                     return this.book.locations.load(stored);
                 } else {
@@ -281,7 +284,7 @@ class Epub extends Component {
     render() {
         return (
             <Rendition
-                ref={(r) => {
+                ref={r => {
                     this.rendition = r;
 
                     if (this.needsOpen) {
