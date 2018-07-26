@@ -235,8 +235,9 @@ class Epub extends Component {
                     return this.book.locations = stored;
                 } else {
                     return this.book.generateLocations(this.props.locationsCharBreak || 600).then(locations => {
+                        this.book.locations = locations;
                         // Save out the generated locations to JSON
-                        AsyncStorage.setItem(key, this.book.locations.save());
+                        AsyncStorage.setItem(key, locations);
                         return locations;
                     });
                 }
