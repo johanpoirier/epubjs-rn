@@ -189,6 +189,10 @@ class Epub extends Component {
     _loadBook(bookUrl) {
         __DEV__ && console.log("[Epub] loading book: ", bookUrl);
 
+        this.book = ePub({
+            replacements: this.props.base64 || "none"
+        });
+
         return this._openBook(bookUrl);
     }
 
@@ -198,35 +202,30 @@ class Epub extends Component {
             return;
         }
 
-        ePub(bookUrl)
-            .then(book => {
-                this.book = book;
-                this.ePub = window.Epub;
-            })
-            .then(() => {
-                this.ePub.ready.then(() => {
-                    this.isReady = true;
-                    this.props.onReady && this.props.onReady(this.book);
-                });
+        this.book.open(bookUrl).catch(console.error);
 
-                this.ePub.opened.then(book => {
-                    if (!this.active || !this._isMounted) return;
-                    this.setState({toc: book.navigation.toc});
-                    this.props.onNavigationReady && this.props.onNavigationReady(book.navigation.toc);
-                });
+        this.book.ready.then(() => {
+            this.isReady = true;
+            this.props.onReady && this.props.onReady(this.book);
+        });
 
-                // if (this.props.generateLocations !== false) {
-                //     this.loadLocations().then(locations => {
-                //         this.rendition.setLocations(locations);
-                //         // this.rendition.reportLocation();
-                //         this.props.onLocationsReady && this.props.onLocationsReady(this.book.locations);
-                //     });
-                // }
-            });
+        this.book.opened.then(book => {
+            if (!this.active || !this._isMounted) return;
+            this.setState({toc: book.navigation.toc});
+            this.props.onNavigationReady && this.props.onNavigationReady(book.navigation.toc);
+        });
+
+        // if (this.props.generateLocations !== false) {
+        //     this.loadLocations().then(locations => {
+        //         this.rendition.setLocations(locations);
+        //         // this.rendition.reportLocation();
+        //         this.props.onLocationsReady && this.props.onLocationsReady(this.book.locations);
+        //     });
+        // }
     }
 
     loadLocations() {
-        return this.ePub.ready.then(() => {
+        return this.book.ready.then(() => {
             // Load in stored locations from json or local storage
             var key = this.book.key() + "-locations";
 
