@@ -496,11 +496,12 @@ window.onerror = function (message, file, line, col, error) {
         }
       });
 
+      console.log('[bridge] book', book);
+      console.log('[bridge] book.ready', book.ready);
       book.ready.then(function(){
+        console.log('[bridge] ready');
         _isReady = true;
-
         sendMessage({method:"ready"});
-
       });
 
       window.addEventListener("unload", function () {
