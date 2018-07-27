@@ -108,10 +108,8 @@ window.onerror = function (message, file, line, col, error) {
           }
 
           if (rendition) {
-            sendMessage({method:"log", value: "[Rendition] display target: " + target});
             rendition.display(target);
           } else {
-            sendMessage({method:"log", value: "[Rendition] queue message: " + message});
             q.push(message);
           }
           break;
@@ -474,6 +472,7 @@ window.onerror = function (message, file, line, col, error) {
           });
 
           rendition.on("rendered", function (section) {
+              console.log("[Rendition] rendered ");
               sendMessage({method: "rendered", sectionIndex: section.index});
           });
 
@@ -491,18 +490,16 @@ window.onerror = function (message, file, line, col, error) {
 
           // replay messages
           rendition.started.then(function () {
+            console.log("[Rendition] started");
               var msg;
               for (var i = 0; i < q.length; i++) {
                   msg = q.shift();
+                  console.log("[Rendition] handleMessage " + msg);
                   handleMessage(msg);
               }
           });
 
-          console.log('[bridge] book', book);
-          console.log('[bridge] book.ready', book.ready);
-
           window.Epub.ready.then(function () {
-              console.log('[bridge] ready');
               _isReady = true;
               sendMessage({method: "ready"});
           });
