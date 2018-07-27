@@ -226,24 +226,23 @@ class Epub extends Component {
     }
 
     loadLocations() {
-        return this.book.ready.then(() => {
+        return this.book.ready.then(() => this.book.generateLocations(this.props.locationsCharBreak || 600));
             // Load in stored locations from json or local storage
-            var key = this.book.key() + "-locations";
-
-            return AsyncStorage.getItem(key).then(stored => {
-                if (this.props.regenerateLocations != true && stored !== null) {
-                    return this.book.locations = stored;
-                } else {
-                    return this.book.generateLocations(this.props.locationsCharBreak || 600).then(locations => {
-                        this.book.locations = locations;
-                        // Save out the generated locations to JSON
-                        AsyncStorage.setItem(key, locations);
-                        return locations;
-                    });
-                }
-            })
-
-        });
+            // var key = this.book.key() + "-locations";
+            //
+            // return AsyncStorage.getItem(key).then(stored => {
+            //     if (this.props.regenerateLocations != true && stored !== null) {
+            //         return this.book.locations = stored;
+            //     } else {
+            //         return this.book.generateLocations(this.props.locationsCharBreak || 600).then(locations => {
+            //             this.book.locations = locations;
+            //             // Save out the generated locations to JSON
+            //             AsyncStorage.setItem(key, locations);
+            //             return locations;
+            //         });
+            //     }
+            // })
+        //});
     }
 
     onRelocated(visibleLocation) {
