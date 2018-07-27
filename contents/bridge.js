@@ -95,7 +95,6 @@ window.onerror = function (message, file, line, col, error) {
           var args = decoded.args && decoded.args.length && decoded.args[0];
           var target;
 
-          sendMessage({method:"log", value: "[Rendition] display"});
 
           if (!args) {
             target = undefined;
@@ -106,6 +105,9 @@ window.onerror = function (message, file, line, col, error) {
           else if (args.spine) {
             target = parseInt(args.spine);
           }
+
+          console.log("[bridge] display required on target: " + target);
+          console.log("[bridge] display with rendition: " + rendition);
 
           if (rendition) {
             rendition.display(target);
@@ -118,8 +120,7 @@ window.onerror = function (message, file, line, col, error) {
           var direction = decoded.args.length && decoded.args[0];
           axis = (direction === "paginated") ? "horizontal" : "vertical";
 
-            sendMessage({method:"log", value: "rendition.flow"});
-            sendMessage({method:"log", value: direction});
+          console.log("[bridge] flow direction: " + direction);
 
           if (rendition) {
             rendition.flow(direction);
@@ -472,7 +473,7 @@ window.onerror = function (message, file, line, col, error) {
           });
 
           rendition.on("rendered", function (section) {
-              console.log("[Rendition] rendered ");
+              console.log("[bridge] rendition.rendered");
               sendMessage({method: "rendered", sectionIndex: section.index});
           });
 
@@ -490,11 +491,9 @@ window.onerror = function (message, file, line, col, error) {
 
           // replay messages
           rendition.started.then(function () {
-            console.log("[Rendition] started");
               var msg;
               for (var i = 0; i < q.length; i++) {
                   msg = q.shift();
-                  console.log("[Rendition] handleMessage " + msg);
                   handleMessage(msg);
               }
           });

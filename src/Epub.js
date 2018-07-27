@@ -216,13 +216,13 @@ class Epub extends Component {
             this.props.onNavigationReady && this.props.onNavigationReady(book.navigation.toc);
         });
 
-        // if (this.props.generateLocations !== false) {
-        //     this.loadLocations().then(locations => {
-        //         this.rendition.setLocations(locations);
-        //         // this.rendition.reportLocation();
-        //         this.props.onLocationsReady && this.props.onLocationsReady(this.book.locations);
-        //     });
-        // }
+        if (this.props.generateLocations !== false) {
+            this.loadLocations().then(locations => {
+                this.rendition.setLocations(locations);
+                // this.rendition.reportLocation();
+                this.props.onLocationsReady && this.props.onLocationsReady(this.book.locations);
+            });
+        }
     }
 
     loadLocations() {
