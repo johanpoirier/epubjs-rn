@@ -106,7 +106,6 @@ window.onerror = function (message, file, line, col, error) {
             target = parseInt(args.spine);
           }
 
-          console.log("[bridge] display required on target: " + target);
           console.log("[bridge] display with rendition: " + rendition);
 
           if (rendition) {
@@ -253,7 +252,6 @@ window.onerror = function (message, file, line, col, error) {
           rendition = new ePub.Rendition(book, settings);
 
           rendition.attachTo(document.body);
-          rendition.display();
 
           rendition.hooks.content.register(function (contents) {
               sendMessage({method: "log", value: '[Bridge] hooks.content.register'});
