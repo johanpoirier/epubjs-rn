@@ -249,9 +249,7 @@ window.onerror = function (message, file, line, col, error) {
       }, options);
 
       ePub(url).then(book => {
-          rendition = new ePub.Rendition(book, settings);
-
-          rendition.attachTo(document.body);
+          window.rendition = rendition = book.renderTo(document.body, settings);
 
           rendition.hooks.content.register(function (contents) {
               sendMessage({method: "log", value: '[Bridge] hooks.content.register'});
