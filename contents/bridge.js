@@ -250,7 +250,7 @@ window.onerror = function (message, file, line, col, error) {
         method: "blobUrl"
       }, options);
 
-      await window.book = book = ePub(url);
+      window.book = book = await ePub(url);
 
       window.rendition = rendition = book.renderTo(document.body, settings);
 
