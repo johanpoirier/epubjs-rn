@@ -72,13 +72,14 @@ window.onerror = function (message, file, line, col, error) {
       var response;
       var result;
 
-      console.log("[Bridge] handleMessage: " + message);
-
       switch (decoded.method) {
         case "open": {
           var url = decoded.args[0];
           var options = decoded.args.length > 1 && decoded.args[1];
           await openEpub(url, options);
+
+          console.log("[Bridge] open url: " + url);
+          console.log("[Bridge] open options: " + JSON.stringify(options));
 
           if (options && options.webviewStylesheet) {
             var head = document.getElementsByTagName('head')[0];
@@ -106,7 +107,7 @@ window.onerror = function (message, file, line, col, error) {
             target = parseInt(args.spine);
           }
 
-          console.log("[bridge] display with rendition: " + rendition);
+          console.log("[Bridge] display with rendition: " + rendition);
 
           if (rendition) {
             rendition.display(target);
@@ -119,7 +120,7 @@ window.onerror = function (message, file, line, col, error) {
           var direction = decoded.args.length && decoded.args[0];
           axis = (direction === "paginated") ? "horizontal" : "vertical";
 
-          console.log("[bridge] flow direction: " + direction);
+          console.log("[Bridge] flow direction: " + direction);
 
           if (rendition) {
             rendition.flow(direction);
