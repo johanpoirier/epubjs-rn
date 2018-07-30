@@ -72,7 +72,7 @@ window.onerror = function (message, file, line, col, error) {
       var response;
       var result;
 
-      sendMessage({method:"log", value: "[Rendition] handleMessage: " + message});
+      console.log("[Bridge] handleMessage: " + message);
 
       switch (decoded.method) {
         case "open": {
@@ -254,7 +254,7 @@ window.onerror = function (message, file, line, col, error) {
           window.rendition = rendition = book.renderTo(document.body, settings);
 
           rendition.hooks.content.register(function (contents) {
-              sendMessage({method: "log", value: '[Bridge] hooks.content.register'});
+              console.log("[Bridge] rendition.hooks.content.register");
               var doc = contents.document;
               var startPosition = {x: -1, y: -1};
               var currentPosition = {x: -1, y: -1};
@@ -457,6 +457,7 @@ window.onerror = function (message, file, line, col, error) {
           }.bind(this));
 
           rendition.on("relocated", function (location) {
+              console.log("[Bridge] rendition.relocated");
               sendMessage({method: "relocated", location: location});
           });
 
@@ -471,19 +472,22 @@ window.onerror = function (message, file, line, col, error) {
           });
 
           rendition.on("rendered", function (section) {
-              console.log("[bridge] rendition.rendered");
+              console.log("[Bridge] rendition.rendered");
               sendMessage({method: "rendered", sectionIndex: section.index});
           });
 
           rendition.on("added", function (section) {
+              console.log("[Bridge] rendition.added");
               sendMessage({method: "added", sectionIndex: section.index});
           });
 
           rendition.on("removed", function (section) {
+              console.log("[Bridge] rendition.removed");
               sendMessage({method: "removed", sectionIndex: section.index});
           });
 
           rendition.on("resized", function (size) {
+              console.log("[Bridge] rendition.resized");
               sendMessage({method: "resized", size: size});
           });
 
