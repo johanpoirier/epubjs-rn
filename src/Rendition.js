@@ -244,6 +244,7 @@ class Rendition extends Component {
       return;
     }
 
+    console.log("[Rendition] send to bridge: " + str);
     this.refs.webviewbridge.postMessage(str);
   }
 
