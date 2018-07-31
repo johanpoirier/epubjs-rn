@@ -245,8 +245,7 @@ window.onerror = function (message, file, line, col, error) {
     async function openEpub(url, options) {
       var settings = Object.assign({
         manager: "continuous",
-        overflow: "visible",
-        method: "blobUrl"
+        overflow: "visible"
       }, options);
 
       ePub(url).then(book => {
