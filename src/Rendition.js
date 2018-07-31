@@ -181,13 +181,13 @@ class Rendition extends Component {
   setLocations(locations) {
     this.locations = locations;
     if (this.isReady) {
-      this.sendToBridge("setLocations", [this.locations]);
+      //this.sendToBridge("setLocations", [this.locations]);
     }
   }
 
   reportLocation() {
     if (this.isReady) {
-      this.sendToBridge("reportLocation");
+      //this.sendToBridge("reportLocation");
     }
   }
 
@@ -323,11 +323,13 @@ class Rendition extends Component {
       }
       case "added": {
         let {sectionIndex} = decoded;
+        console.log("[Rendition] added section index: " + sectionIndex);
         this.props.onViewAdded && this.props.onViewAdded(sectionIndex);
         break;
       }
       case "removed": {
         let {sectionIndex} = decoded;
+        console.log("[Rendition] removed section index: " + sectionIndex);
         this.props.beforeViewRemoved && this.props.beforeViewRemoved(sectionIndex);
         break;
       }
@@ -364,7 +366,7 @@ class Rendition extends Component {
   _ready() {
     this.isReady = true;
     if (this.locations) {
-      this.sendToBridge("setLocations", [this.locations]);
+      //this.sendToBridge("setLocations", [this.locations]);
     }
     this.props.onDisplayed && this.props.onDisplayed();
   }
