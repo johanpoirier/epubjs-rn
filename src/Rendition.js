@@ -268,14 +268,14 @@ class Rendition extends Component {
 
     switch (decoded.method) {
       case "log": {
-        console.log.apply(console.log, [decoded.value]);
+        console.log.apply(console.log, ["[iframe]", decoded.value]);
         break;
       }
       case "error": {
         if (this.props.onError) {
           this.props.onError(decoded.value);
         } else {
-          console.error.apply(console.error, [decoded.value]);
+          console.error.apply(console.error, ["[iframe]", decoded.value]);
         }
         break;
       }

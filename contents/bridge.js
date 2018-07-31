@@ -494,6 +494,7 @@ window.onerror = function (message, file, line, col, error) {
 
           // replay messages
           rendition.started.then(function () {
+              console.log("[Bridge] rendition.started");
               var msg;
               for (var i = 0; i < q.length; i++) {
                   msg = q.shift();
