@@ -18,8 +18,6 @@ import EventEmitter from 'event-emitter';
 
 import { readFileSync } from "fs";
 
-const URL = require("epubjs/libs/url/url-polyfill.js");
-
 const EPUBJS = readFileSync(__dirname + "/../node_modules/epubjs/dist/epub.js", "utf8");
 const BRIDGE = readFileSync(__dirname + "/../contents/bridge.js", "utf8");
 
@@ -104,8 +102,6 @@ class Rendition extends Component {
   load(bookUrl) {
     if (!this._webviewLoaded) return;
 
-    __DEV__ && console.log("[Rendition] loading book: ", bookUrl);
-
     let config = {
       "minSpreadWidth": this.props.minSpreadWidth || 800,
       "flow": this.props.flow || "paginated",
@@ -181,13 +177,13 @@ class Rendition extends Component {
   setLocations(locations) {
     this.locations = locations;
     if (this.isReady) {
-      //this.sendToBridge("setLocations", [this.locations]);
+      this.sendToBridge("setLocations", [this.locations]);
     }
   }
 
   reportLocation() {
     if (this.isReady) {
-      //this.sendToBridge("reportLocation");
+      this.sendToBridge("reportLocation");
     }
   }
 
@@ -268,14 +264,14 @@ class Rendition extends Component {
 
     switch (decoded.method) {
       case "log": {
-        console.log.apply(console.log, ["[iframe]", decoded.value]);
+        console.log.apply(console.log, [decoded.value]);
         break;
       }
       case "error": {
         if (this.props.onError) {
           this.props.onError(decoded.value);
         } else {
-          console.error.apply(console.error, ["[iframe]", decoded.value]);
+          console.error.apply(console.error, [decoded.value]);
         }
         break;
       }
@@ -284,7 +280,6 @@ class Rendition extends Component {
         break;
       }
       case "rendered": {
-        console.log("[Rendition] rendered");
         if (!this.state.loaded) {
           this.setState({loaded: true});
         }
@@ -323,18 +318,15 @@ class Rendition extends Component {
       }
       case "added": {
         let {sectionIndex} = decoded;
-        console.log("[Rendition] added section index: " + sectionIndex);
         this.props.onViewAdded && this.props.onViewAdded(sectionIndex);
         break;
       }
       case "removed": {
         let {sectionIndex} = decoded;
-        console.log("[Rendition] removed section index: " + sectionIndex);
         this.props.beforeViewRemoved && this.props.beforeViewRemoved(sectionIndex);
         break;
       }
       case "ready": {
-        console.log("[Rendition] ready");
         this._ready();
         break;
       }

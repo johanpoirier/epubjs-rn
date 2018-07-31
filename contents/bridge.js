@@ -78,9 +78,6 @@ window.onerror = function (message, file, line, col, error) {
           var options = decoded.args.length > 1 && decoded.args[1];
           await openEpub(url, options);
 
-          console.log("[Bridge] open url: " + url);
-          console.log("[Bridge] open options: " + JSON.stringify(options));
-
           if (options && options.webviewStylesheet) {
             var head = document.getElementsByTagName('head')[0];
             var link = document.createElement('link');
@@ -107,8 +104,6 @@ window.onerror = function (message, file, line, col, error) {
             target = parseInt(args.spine);
           }
 
-          console.log("[Bridge] display with rendition: " + rendition);
-
           if (rendition) {
             rendition.display(target);
           } else {
@@ -119,8 +114,6 @@ window.onerror = function (message, file, line, col, error) {
         case "flow": {
           var direction = decoded.args.length && decoded.args[0];
           axis = (direction === "paginated") ? "horizontal" : "vertical";
-
-          console.log("[Bridge] flow direction: " + direction);
 
           if (rendition) {
             rendition.flow(direction);
@@ -254,7 +247,6 @@ window.onerror = function (message, file, line, col, error) {
           window.rendition = rendition = book.renderTo(document.body, settings);
 
           rendition.hooks.content.register(function (contents) {
-              console.log("[Bridge] rendition.hooks.content.register");
               var doc = contents.document;
               var startPosition = {x: -1, y: -1};
               var currentPosition = {x: -1, y: -1};
@@ -457,7 +449,6 @@ window.onerror = function (message, file, line, col, error) {
           }.bind(this));
 
           rendition.on("relocated", function (location) {
-              console.log("[Bridge] rendition.relocated");
               sendMessage({method: "relocated", location: location});
           });
 
@@ -472,28 +463,23 @@ window.onerror = function (message, file, line, col, error) {
           });
 
           rendition.on("rendered", function (section) {
-              console.log("[Bridge] rendition.rendered");
               sendMessage({method: "rendered", sectionIndex: section.index});
           });
 
           rendition.on("added", function (section) {
-              console.log("[Bridge] rendition.added");
               sendMessage({method: "added", sectionIndex: section.index});
           });
 
           rendition.on("removed", function (section) {
-              console.log("[Bridge] rendition.removed");
               sendMessage({method: "removed", sectionIndex: section.index});
           });
 
           rendition.on("resized", function (size) {
-              console.log("[Bridge] rendition.resized");
               sendMessage({method: "resized", size: size});
           });
 
           // replay messages
           rendition.started.then(function () {
-              console.log("[Bridge] rendition.started");
               var msg;
               for (var i = 0; i < q.length; i++) {
                   msg = q.shift();
