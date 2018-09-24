@@ -187,12 +187,13 @@ class Epub extends Component {
     }
 
     _loadBook(bookUrl) {
-        __DEV__ && console.log("[Epub] loading book: ", bookUrl);
+        __DEV__ && console.log("[Epub] loading book", bookUrl);
 
         return ePub({
             replacements: this.props.base64 || "none"
         }).then(book => {
             this.book = book;
+            console.log("[Epub] book", this.book);
             this._openBook(bookUrl);
         });
     }
@@ -216,17 +217,17 @@ class Epub extends Component {
             this.props.onNavigationReady && this.props.onNavigationReady(book.navigation.toc);
         });
 
-        if (this.props.generateLocations !== false) {
-            this.loadLocations().then(locations => {
-                this.rendition.setLocations(locations);
-                // this.rendition.reportLocation();
-                this.props.onLocationsReady && this.props.onLocationsReady(this.book.locations);
-            });
-        }
+        // if (this.props.generateLocations !== false) {
+        //     this.loadLocations().then(locations => {
+        //         this.rendition.setLocations(locations);
+        //         // this.rendition.reportLocation();
+        //         this.props.onLocationsReady && this.props.onLocationsReady(this.book.locations);
+        //     });
+        // }
     }
 
     loadLocations() {
-        return this.book.ready.then(() => this.book.generateLocations(this.props.locationsCharBreak || 600));
+        //return this.book.ready.then(() => this.book.generateLocations(this.props.locationsCharBreak || 600));
             // Load in stored locations from json or local storage
             // var key = this.book.key() + "-locations";
             //
