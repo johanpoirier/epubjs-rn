@@ -242,8 +242,6 @@ window.onerror = function (message, file, line, col, error) {
       }, options);
 
       ePub(url).then(book => {
-          window.book = window.Epub;
-
           window.rendition = rendition = book.renderTo(document.body, settings);
 
           rendition.hooks.content.register(function (contents) {
@@ -487,7 +485,7 @@ window.onerror = function (message, file, line, col, error) {
               }
           });
 
-          window.book.ready.then(function () {
+          book.epub.ready.then(function () {
               _isReady = true;
               sendMessage({method: "ready"});
           });
