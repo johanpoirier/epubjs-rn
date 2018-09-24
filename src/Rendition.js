@@ -197,19 +197,19 @@ class Rendition extends Component {
 
   mark (cfiRange, data) {
     this.sendToBridge("mark", [cfiRange, data]);
-	}
+  }
 
   unhighlight (cfiRange, data) {
     this.sendToBridge("removeAnnotation", [cfiRange, data]);
-	}
+  }
 
-	ununderline (cfiRange, data) {
+  ununderline (cfiRange, data) {
     this.sendToBridge("removeAnnotation", [cfiRange, data]);
-	}
+  }
 
-	unmark (cfiRange, data) {
+  unmark (cfiRange, data) {
     this.sendToBridge("removeAnnotation", [cfiRange, data]);
-	}
+  }
 
   next() {
     this.sendToBridge("next");
@@ -261,6 +261,8 @@ class Rendition extends Component {
       decoded = msg; // webkit may pass parsed objects
     }
     var p;
+
+    console.log('[Rendition] onBridgeMessage', decoded);
 
     switch (decoded.method) {
       case "log": {

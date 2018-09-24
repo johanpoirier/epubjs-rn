@@ -73,7 +73,7 @@ window.onerror = function (message, file, line, col, error) {
       var result;
 
       switch (decoded.method) {
-        case "open": {
+        case "open":
           var url = decoded.args[0];
           var options = decoded.args.length > 1 && decoded.args[1];
           await openEpub(url, options);
@@ -86,10 +86,9 @@ window.onerror = function (message, file, line, col, error) {
             link.href = options.webviewStylesheet;
             head.appendChild(link);
           }
-
           break;
-        }
-        case "display": {
+
+        case "display":
           var args = decoded.args && decoded.args.length && decoded.args[0];
           var target;
 
@@ -110,8 +109,8 @@ window.onerror = function (message, file, line, col, error) {
             q.push(message);
           }
           break;
-        }
-        case "flow": {
+
+        case "flow":
           var direction = decoded.args.length && decoded.args[0];
           axis = (direction === "paginated") ? "horizontal" : "vertical";
 
@@ -120,10 +119,9 @@ window.onerror = function (message, file, line, col, error) {
           } else {
             q.push(message);
           }
-
           break;
-        }
-        case "setLocations": {
+
+        case "setLocations":
           var locations = decoded.args[0];
           if (book) {
             book.locations.load(locations);
@@ -135,52 +133,52 @@ window.onerror = function (message, file, line, col, error) {
             rendition.reportLocation();
           }
           break;
-        }
-        case "reportLocation": {
+
+        case "reportLocation":
           if (rendition) {
             rendition.reportLocation();
           } else {
             q.push(message);
           }
           break;
-        }
-        case "minSpreadWidth": {
+
+        case "minSpreadWidth":
           minSpreadWidth = decoded.args;
           break;
-        }
-        case "mark": {
+
+        case "mark":
           if (rendition) {
             rendition.annotations.mark.apply(rendition.annotations, decoded.args);
           } else {
             q.push(message);
           }
           break;
-        }
-        case "underline": {
+
+        case "underline":
           if (rendition) {
             rendition.annotations.underline.apply(rendition.annotations, decoded.args);
           } else {
             q.push(message);
           }
           break;
-        }
-        case "highlight": {
+
+        case "highlight":
           if (rendition) {
             rendition.annotations.highlight.apply(rendition.annotations, decoded.args);
           } else {
             q.push(message);
           }
           break;
-        }
-        case "removeAnnotation": {
+
+        case "removeAnnotation":
           if (rendition) {
             rendition.annotations.remove.apply(rendition.annotations, decoded.args);
           } else {
             q.push(message);
           }
           break;
-        }
-        case "themes": {
+
+        case "themes":
           var themes = decoded.args[0];
           if (rendition) {
             rendition.themes.register(themes);
@@ -188,8 +186,8 @@ window.onerror = function (message, file, line, col, error) {
             q.push(message);
           }
           break;
-        }
-        case "theme": {
+
+        case "theme":
           var theme = decoded.args[0];
           if (rendition) {
             rendition.themes.select(theme);
@@ -197,8 +195,8 @@ window.onerror = function (message, file, line, col, error) {
             q.push(message);
           }
           break;
-        }
-        case "fontSize": {
+
+        case "fontSize":
           var fontSize = decoded.args[0];
           if (rendition) {
             rendition.themes.fontSize(fontSize);
@@ -206,8 +204,8 @@ window.onerror = function (message, file, line, col, error) {
             q.push(message);
           }
           break;
-        }
-        case "font": {
+
+        case "font":
           var font = decoded.args[0];
           if (rendition) {
             rendition.themes.font(font);
@@ -215,23 +213,22 @@ window.onerror = function (message, file, line, col, error) {
             q.push(message);
           }
           break;
-        }
-        case "next": {
+
+        case "next":
           if (rendition) {
             rendition.next();
           } else {
             q.push(message);
           }
           break;
-        }
-        case "prev": {
+
+        case "prev":
           if (rendition) {
             rendition.prev();
           } else {
             q.push(message);
           }
           break;
-        }
       }
     }
 
